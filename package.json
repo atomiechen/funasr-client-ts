@@ -13,7 +13,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/funasr.ts --format esm --dts --clean",
+    "build": "tsup src/funasr.ts --format esm,iife --global-name FunASRClient --dts --minify --sourcemap --clean",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
