@@ -101,16 +101,15 @@ export type FunASRMessage = {
  */
 export type FunASRMessageDecoded = Omit<FunASRMessage, 'timestamp'> & {
   /**
-   * timestamp
-   * 解码后的时间戳，格式为 [[100,200], [200,500]] (ms)
+   * Decoded timestamp in the format `[[100,200], [200,500]]` (ms)
    */
   timestamp?: Array<[number, number]>;
   /**
-   * 转换为本机的实际时间戳列表
+   * Converts the timestamp to the local machine's real timestamps, which is useful when `startTime` is provided.
    */
   real_timestamp?: Array<[number, number]>;
   /**
-   * 转换为本机的实际时间戳句子列表
+   * Converts the timestamp to the local machine's real timestamps, which is useful when `startTime` is provided.
    */
   real_stamp_sents?: Array<{
     text_seg: string;
@@ -134,7 +133,10 @@ export type FunASRInitConfig = Omit<FunASRInitMessage, 'hotwords' | 'is_speaking
  * Options for the FunASR client.
  */
 export type FunASRClientOptions<TDecode extends boolean> = {
-  uri: string | URL;
+  /**
+   * The WebSocket URL to connect to the FunASR server.
+   */
+  url: string | URL;
   /**
    * Whether to decode the message before passing it to the `onMessage` callback.
    */

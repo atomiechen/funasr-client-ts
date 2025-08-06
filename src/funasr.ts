@@ -13,7 +13,7 @@ export class FunASRClient<TDecode extends boolean> {
       resolveFinal = resolve;
     });
 
-    this.socket = new WebSocket(this.opts.uri);
+    this.socket = new WebSocket(this.opts.url);
 
     this.socket.onopen = () => {
       const payload: FunASRInitMessage = {
