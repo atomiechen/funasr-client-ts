@@ -29,7 +29,7 @@ export type FunASRInitMessage = {
   /**
    * Indicates the latency configuration of the streaming model, `[5,10,5]` indicates that the current audio is 600ms long, with a 300ms look-ahead and look-back time.
    */
-  chunk_size?: [number, number, number];
+  chunk_size: [number, number, number];
   /**
    * When the input audio is in PCM format, the audio sampling rate parameter needs to be added.
    * Default: 16000.
@@ -125,8 +125,16 @@ export type FunASRClientState = "connected" | "error" | "closed";
 /**
  * The initialization configuration for the first message of the FunASR client.
  */
-export type FunASRInitConfig = Omit<FunASRInitMessage, 'hotwords' | 'is_speaking'> & {
+export type FunASRInitConfig = Omit<FunASRInitMessage, 'hotwords' | 'is_speaking' | 'chunk_size'> & {
+  /**
+   * Hotwords in word-weight pairs, like `{"阿里巴巴": 20, "通义实验室": 30}`.
+   */
   hotwords?: Record<string, number>;
+  /**
+   * Indicates the latency configuration of the streaming model, `[5,10,5]` indicates that the current audio is 600ms long, with a 300ms look-ahead and look-back time.
+   * Default: `[5, 10, 5]`.
+   */
+  chunk_size?: [number, number, number];
 };
 
 /**

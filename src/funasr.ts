@@ -20,6 +20,7 @@ export class FunASRClient<TDecode extends boolean> {
         const payload: FunASRInitMessage = {
           ...this.opts.config,
           is_speaking: true,
+          chunk_size: this.opts.config?.chunk_size ?? [5, 10, 5],
           hotwords: this.opts.config?.hotwords ? JSON.stringify(this.opts.config.hotwords) : undefined,
         };
         this.socket?.send(JSON.stringify(payload));
