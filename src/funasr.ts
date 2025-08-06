@@ -15,14 +15,14 @@ export class FunASRClient<TDecode extends boolean> {
 
     this.socket = new WebSocket(this.opts.url);
 
-    this.socket.onopen = () => {
+    this.socket.onopen = (ev) => {
       const payload: FunASRInitMessage = {
         ...this.opts.config,
         is_speaking: true,
         hotwords: this.opts.config?.hotwords ? JSON.stringify(this.opts.config.hotwords) : undefined,
       };
       this.socket?.send(JSON.stringify(payload));
-      this.opts.onStateChange?.("connected");
+      this.opts.onStateChange?.("connected", ev);
     };
 
     this.socket.onmessage = (event) => {
@@ -59,12 +59,12 @@ export class FunASRClient<TDecode extends boolean> {
       }
     };
 
-    this.socket.onerror = () => {
-      this.opts.onStateChange?.("error");
+    this.socket.onerror = (ev) => {
+      this.opts.onStateChange?.("error", ev);
     };
 
-    this.socket.onclose = () => {
-      this.opts.onStateChange?.("closed");
+    this.socket.onclose = (ev) => {
+      this.opts.onStateChange?.("closed", ev);
     };
   }
 

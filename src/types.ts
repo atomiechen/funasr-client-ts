@@ -150,7 +150,7 @@ export type FunASRClientOptions<TDecode extends boolean> = {
   /**
    * Callback function to handle state changes of the client.
    */
-  onStateChange?: (state: FunASRClientState) => void;
+  onStateChange?: (state: FunASRClientState, event: Event) => void;
   /**
    * The start time of the audio recording.
    */
