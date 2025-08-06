@@ -7,65 +7,70 @@ export class FunASRClient<TDecode extends boolean> {
 
   constructor(private opts: FunASRClientOptions<TDecode>) {}
 
-  connect() {
-    let resolveFinal!: () => void;
-    this.finalPromise = new Promise<void>((resolve) => {
-      resolveFinal = resolve;
-    });
+  async connect() {
+    return new Promise((resolve, reject) => {
+      let resolveFinal!: () => void;
+      this.finalPromise = new Promise<void>((resolve) => {
+        resolveFinal = resolve;
+      });
 
-    this.socket = new WebSocket(this.opts.url);
+      this.socket = new WebSocket(this.opts.url);
 
-    this.socket.onopen = (ev) => {
-      const payload: FunASRInitMessage = {
-        ...this.opts.config,
-        is_speaking: true,
-        hotwords: this.opts.config?.hotwords ? JSON.stringify(this.opts.config.hotwords) : undefined,
-      };
-      this.socket?.send(JSON.stringify(payload));
-      this.opts.onStateChange?.("connected", ev);
-    };
-
-    this.socket.onmessage = (event) => {
-      const data: FunASRMessage = JSON.parse(event.data);
-      // decode the message if required
-      if (this.opts.decode) {
-        const dataDecoded: FunASRMessageDecoded = {
-          ...data,
-          timestamp: data.timestamp ? JSON.parse(data.timestamp) : undefined,
+      this.socket.onopen = (ev) => {
+        const payload: FunASRInitMessage = {
+          ...this.opts.config,
+          is_speaking: true,
+          hotwords: this.opts.config?.hotwords ? JSON.stringify(this.opts.config.hotwords) : undefined,
         };
-        // Convert timestamp to real timestamps if startTime is provided
-        const startTime = this.opts.startTime;
-        if (startTime !== undefined && startTime > 0) {
-          dataDecoded.real_timestamp = dataDecoded.timestamp?.map((ts: [number, number]) => [
-            ts[0] + startTime,
-            ts[1] + startTime,
-          ]);
-          dataDecoded.real_stamp_sents = dataDecoded.stamp_sents?.map((sent) => ({
-            ...sent,
-            ts_list: sent.ts_list.map((ts: [number, number]) => [
+        this.socket?.send(JSON.stringify(payload));
+        this.opts.onStateChange?.("connected", ev);
+        resolve(null);
+      };
+
+      this.socket.onmessage = (event) => {
+        const data: FunASRMessage = JSON.parse(event.data);
+        // decode the message if required
+        if (this.opts.decode) {
+          const dataDecoded: FunASRMessageDecoded = {
+            ...data,
+            timestamp: data.timestamp ? JSON.parse(data.timestamp) : undefined,
+          };
+          // Convert timestamp to real timestamps if startTime is provided
+          const startTime = this.opts.startTime;
+          if (startTime !== undefined && startTime > 0) {
+            dataDecoded.real_timestamp = dataDecoded.timestamp?.map((ts: [number, number]) => [
               ts[0] + startTime,
               ts[1] + startTime,
-            ]),
-            start: sent.start >= 0 ? sent.start + startTime : sent.start,
-            end: sent.end >= 0 ? sent.end + startTime : sent.end,
-          }));
+            ]);
+            dataDecoded.real_stamp_sents = dataDecoded.stamp_sents?.map((sent) => ({
+              ...sent,
+              ts_list: sent.ts_list.map((ts: [number, number]) => [
+                ts[0] + startTime,
+                ts[1] + startTime,
+              ]),
+              start: sent.start >= 0 ? sent.start + startTime : sent.start,
+              end: sent.end >= 0 ? sent.end + startTime : sent.end,
+            }));
+          }
+          (this.opts.onMessage as ((msg: FunASRMessageDecoded) => void) | undefined)?.(dataDecoded);
+        } else {
+          (this.opts.onMessage as ((msg: FunASRMessage) => void) | undefined)?.(data);
         }
-        (this.opts.onMessage as ((msg: FunASRMessageDecoded) => void) | undefined)?.(dataDecoded);
-      } else {
-        (this.opts.onMessage as ((msg: FunASRMessage) => void) | undefined)?.(data);
-      }
-      if (data.is_final) {
-        resolveFinal();
-      }
-    };
+        if (data.is_final) {
+          resolveFinal();
+        }
+      };
 
-    this.socket.onerror = (ev) => {
-      this.opts.onStateChange?.("error", ev);
-    };
+      this.socket.onerror = (ev) => {
+        this.opts.onStateChange?.("error", ev);
+        reject(`WebSocket connection to ${this.opts.url} failed.`);
+      };
 
-    this.socket.onclose = (ev) => {
-      this.opts.onStateChange?.("closed", ev);
-    };
+      this.socket.onclose = (ev) => {
+        this.opts.onStateChange?.("closed", ev);
+        reject(`WebSocket connection to ${this.opts.url} closed.`);
+      };
+    });
   }
 
   setStartTime(startTime: number) {
