@@ -68,6 +68,10 @@ export class FunASRClient<TDecode extends boolean> {
     };
   }
 
+  setStartTime(startTime: number) {
+    this.opts.startTime = startTime;
+  }
+
   send(pcm: Int16Array) {
     if (this.socket?.readyState === WebSocket.OPEN) {
       this.socket.send(pcm.buffer);

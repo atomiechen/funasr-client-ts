@@ -51,6 +51,8 @@ export class MicASR {
   async start() {
     this.client.connect();
     await this.recorder.start();
+    // set the start time for timestamp conversion
+    this.client.setStartTime(Date.now());
   }
 
   async stop() {
