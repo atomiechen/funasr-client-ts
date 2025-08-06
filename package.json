@@ -5,22 +5,26 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/funasr.js"
+      "types": "./dist/esm/funasr.d.ts",
+      "import": "./dist/esm/funasr.js"
+    },
+    "./mic": {
+      "types": "./dist/esm/mic.d.ts",
+      "import": "./dist/esm/mic.js"
     }
   },
-  "types": "dist/funasr.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/funasr.ts --format esm,iife --global-name FunASRClient --dts --minify --sourcemap --clean",
+    "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/atomiechen/funasr-client-ts.git"
   },
-  "keywords": [],
+  "keywords": ["funasr", "funasr-client", "websocket", "ws", "asr"],
   "author": "Atomie CHEN <atomic_cwh@163.com>",
   "license": "MIT",
   "bugs": {
