@@ -1,6 +1,6 @@
 {
   "name": "funasr-client",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Really easy-to-use Typescript client for FunASR runtime server.",
   "type": "module",
   "exports": {
@@ -24,7 +24,13 @@
     "type": "git",
     "url": "git+https://github.com/atomiechen/funasr-client-ts.git"
   },
-  "keywords": ["funasr", "funasr-client", "websocket", "ws", "asr"],
+  "keywords": [
+    "funasr",
+    "funasr-client",
+    "websocket",
+    "ws",
+    "asr"
+  ],
   "author": "Atomie CHEN <atomic_cwh@163.com>",
   "license": "MIT",
   "bugs": {
