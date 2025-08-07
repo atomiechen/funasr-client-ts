@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESM Test Page</title>
+</head>
+<body>
+    <h1><code>funasr-client</code> ESM Test Page</h1>
+    <label for="url">FunASR Server URL:</label>
+    <input type="text" id="url" style="width: 100%;height:100%" value="wss://www.funasr.com:10096/">
+    <br>
+    <button id="start-btn" onclick="startMic()">Start</button>
+    <button id="stop-btn" onclick="stopMic()">Stop</button>
+    <br><br>
+    <textarea id="log" rows="30" cols="50" style="width: 100%;height:100%" readonly></textarea>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "funasr-client": "../dist/esm",
+                "funasr-client/mic": "../dist/esm/mic.js"
+            }
+        }
+    </script>
+    <script type="module">
+        import { MicASR } from 'funasr-client/mic';
+
+        let mic;
+
+        function startMic() {
+            if (mic) {
+                console.warn('Microphone is already started.');
+                return;
+            }
+            const url = document.getElementById('url').value.trim();
+            if (!url) {
+                console.error('Please enter a valid FunASR server URL.');
+                return;
+            }
+            mic = new MicASR({ 
+                url: url,
+                onMessage: (message) => {
+                    console.log('Received message:', message);
+                    const log = document.getElementById('log');
+                    log.value += JSON.stringify(message) + '\n';
+                },
+            });
+            mic.start()
+            .then(() => {
+                console.log('Microphone started.');
+            }).catch(err => {
+                console.error('Error starting microphone:', err);
+            });
+        }
+
+        function stopMic() {
+            if (mic === null) {
+                console.warn('Microphone is not started.');
+                return;
+            }
+            mic.stop()
+            .then(() => {
+                console.log('Microphone stopped.');
+                mic = null; // Reset mic to allow starting again
+            }).catch(err => {
+                console.error('Error stopping microphone:', err);
+            });
+        }
+
+        window.startMic = startMic;
+        window.stopMic = stopMic;
+    </script>
+</body>
+</html>
