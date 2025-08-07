@@ -1,7 +1,7 @@
 # FunASR-Client (TS/JS)
 
+[![NPM](https://img.shields.io/npm/v/funasr-client?logo=npm&label=funasr-client)](https://www.npmjs.com/package/funasr-client)
 [![GitHub](https://img.shields.io/badge/github-gray?logo=github)](https://github.com/atomiechen/funasr-client-ts)
-[![NPM](https://img.shields.io/npm/v/funasr-client-ts?logo=npm)](https://www.npmjs.com/package/funasr-client-ts)
 
 
 Really easy-to-use Typescript/JavaScript client for FunASR runtime server.
