@@ -39,7 +39,7 @@ Import the ESM module directly from a CDN:
   {
     "imports": {
       "funasr-client": "https://esm.sh/funasr-client@latest",
-      "funasr-client/mic": "https://esm.sh/funasr-client@latest/mic.js"
+      "funasr-client/mic": "https://esm.sh/funasr-client@latest/mic"
     }
   }
 </script>
@@ -142,3 +142,7 @@ mic_asr.stop()
 
 - FunASR WebSocket Protocol ([English](https://github.com/modelscope/FunASR/blob/main/runtime/docs/websocket_protocol.md) | [简体中文](https://github.com/modelscope/FunASR/blob/main/runtime/docs/websocket_protocol_zh.md))
 
+
+[1]: https://github.com/modelscope/FunASR
+[2]: https://github.com/modelscope/FunASR/blob/main/runtime/readme.md
+[3]: https://gist.github.com/atomiechen/2deaf80dba21b4434ab21d6bf656fbca
