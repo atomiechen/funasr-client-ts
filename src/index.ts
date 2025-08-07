@@ -7,6 +7,11 @@ export class FunASRClient<TDecode extends boolean> {
 
   constructor(private opts: FunASRClientOptions<TDecode>) {}
 
+  /**
+   * Connects to the FunASR server and sends the initial configuration message.
+   * @returns A promise that resolves when the connection is established and the initial message is sent
+   * or rejects if the connection fails.
+   */
   async connect() {
     return new Promise((resolve, reject) => {
       let resolveFinal!: () => void;
@@ -74,16 +79,35 @@ export class FunASRClient<TDecode extends boolean> {
     });
   }
 
+  /**
+   * Set the start timestamp for the audio recording.
+   * This is useful for converting timestamps in the received messages to real timestamps.
+   * @param startTime The start time in milliseconds.
+   */
   setStartTime(startTime: number) {
     this.opts.startTime = startTime;
   }
 
+  /**
+   * Sends audio data to the FunASR server.
+   * @param pcm The audio data in PCM format as an Int16Array.
+   * This method will only send data if the WebSocket connection is open.
+   * If the connection is closed, it will not send any data.
+   */
   send(pcm: Int16Array) {
     if (this.socket?.readyState === WebSocket.OPEN) {
       this.socket.send(pcm.buffer);
     }
   }
 
+  /**
+   * Send the final message to the server, wait for the final response, and close the WebSocket connection.
+   * @param timeout Optional timeout in milliseconds to wait for the final response.
+   * If not provided, it will wait indefinitely until the final response is received.
+   * If a timeout is provided, it will wait for either the final response or the timeout.
+   * If the timeout is reached, it will close the connection.
+   * @returns A promise that resolves when the connection is closed.
+   */
   async close(timeout: number | null = null) {
     if (this.socket?.readyState === WebSocket.OPEN) {
       // signal that we are done speaking

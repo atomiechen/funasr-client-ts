@@ -48,6 +48,9 @@ export class MicASR {
     this.recorder = new AudioRecorder((pcm) => this.client.send(pcm));
   }
 
+  /**
+   * Start the real-time ASR process by connecting to the FunASR server and starting the audio recorder.
+   */
   async start() {
     await this.client.connect();
     await this.recorder.start();
@@ -55,6 +58,9 @@ export class MicASR {
     this.client.setStartTime(Date.now());
   }
 
+  /**
+   * Stop the real-time ASR process by stopping the audio recorder and closing the FunASR client connection.
+   */
   async stop() {
     await this.recorder.stop();
     await this.client.close();
