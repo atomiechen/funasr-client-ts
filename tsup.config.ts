@@ -11,7 +11,9 @@ export default defineConfig([
     minify: true,
   },
   {
-    entry: ['src/browser.ts'],
+    entry: {
+      index: 'src/browser.ts',
+    },
     format: ['iife'],
     outDir: 'dist/iife',
     globalName: 'funasr',

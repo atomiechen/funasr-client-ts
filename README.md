@@ -51,13 +51,13 @@ Import the ESM module directly from a CDN:
 
 ### IIFE CDN (Browser)
 
-All features are also available in the IIFE bundle `browser.global.js`, which can be directly included in web pages.
+All features are also available in the IIFE bundle `dist/iife/index.global.js`, which can be directly included in web pages.
 Tools are exposed in the global `funasr` object.
 
 Import the IIFE module directly from a CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/funasr-client@latest/dist/iife/browser.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/funasr-client@latest/dist/iife/index.global.js"></script>
 <script>
     // funasr object is available globally
     console.log(funasr.FunASRClient);
