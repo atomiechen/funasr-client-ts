@@ -1,4 +1,4 @@
-import { FunASRClient } from "./funasr";
+import { FunASRClient } from "./index";
 import type { FunASRClientOptions } from "./types";
 
 

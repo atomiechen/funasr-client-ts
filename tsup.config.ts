@@ -2,7 +2,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig([
   {
-    entry: ['src/funasr.ts', 'src/mic.ts'],
+    entry: ['src/index.ts', 'src/mic.ts'],
     format: ['esm'],
     outDir: 'dist/esm',
     clean: true,

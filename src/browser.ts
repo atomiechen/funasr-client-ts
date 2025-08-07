@@ -1,2 +1,2 @@
-export * from "./funasr";
+export * from "./index";
 export * from "./mic";
