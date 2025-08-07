@@ -1,6 +1,6 @@
 # FunASR-Client (TS/JS)
 
-[![GitHub](https://img.shields.io/badge/github-funasr--client--ts-blue?logo=github)](https://github.com/atomiechen/funasr-client-ts)
+[![GitHub](https://img.shields.io/badge/github-gray?logo=github)](https://github.com/atomiechen/funasr-client-ts)
 [![NPM](https://img.shields.io/npm/v/funasr-client-ts?logo=npm)](https://www.npmjs.com/package/funasr-client-ts)
 
 
