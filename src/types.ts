@@ -105,11 +105,11 @@ export type FunASRMessageDecoded = Omit<FunASRMessage, 'timestamp'> & {
    */
   timestamp?: Array<[number, number]>;
   /**
-   * Converts the timestamp to the local machine's real timestamps, which is useful when `startTime` is provided.
+   * Converts the `timestamp` to the local machine's real timestamps, which is useful when `startTime` is provided.
    */
   real_timestamp?: Array<[number, number]>;
   /**
-   * Converts the timestamp to the local machine's real timestamps, which is useful when `startTime` is provided.
+   * Converts the `stamp_sents` to the local machine's real timestamps, which is useful when `startTime` is provided.
    */
   real_stamp_sents?: Array<{
     text_seg: string;

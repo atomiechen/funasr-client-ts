@@ -60,9 +60,9 @@ Import the IIFE module directly from a CDN:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/funasr-client@latest/dist/iife/index.global.js"></script>
 <script>
-    // funasr object is available globally
-    console.log(funasr.FunASRClient);
-    console.log(funasr.MicASR);
+  // funasr object is available globally
+  console.log(funasr.FunASRClient);
+  console.log(funasr.MicASR);
 </script>
 ```
 
