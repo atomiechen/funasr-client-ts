@@ -41,6 +41,11 @@ jobs:
       - name: Checkout to latest tag
         run: git checkout ${{ steps.set_release_tag.outputs.tag }}
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
         with:
@@ -51,6 +56,10 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - run: npm ci
-      - run: npm run build
-      - run: npm publish
+      # - run: npm ci
+      # - run: npm run build
+      # - run: npm publish
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
+      # Don't check if current branch is your publish branch (we checkout to the release tag)
+      - run: pnpm publish --no-git-checks
