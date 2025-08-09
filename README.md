@@ -81,7 +81,7 @@ const client = new FunASRClient({
   // Disable auto-decoding if you want to handle original message objects
   decode: true,
 
-  // callback to handle incoming messages
+  // callback to handle incoming messages (FunASRMessageDecoded or FunASRMessage)
   onMessage: (msg) => {
     console.log("Received message:", msg);
   },
