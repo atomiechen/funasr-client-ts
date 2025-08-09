@@ -125,7 +125,7 @@ export type FunASRClientState = "connected" | "error" | "closed";
 /**
  * The initialization configuration for the first message of the FunASR client.
  */
-export type FunASRInitConfig = Omit<FunASRInitMessage, 'hotwords' | 'is_speaking' | 'chunk_size'> & {
+export type FunASRClientInitConfig = Omit<FunASRInitMessage, 'hotwords' | 'is_speaking' | 'chunk_size'> & {
   /**
    * Hotwords in word-weight pairs, like `{"阿里巴巴": 20, "通义实验室": 30}`.
    */
@@ -166,5 +166,5 @@ export type FunASRClientOptions<TDecode extends boolean> = {
   /**
    * The initial configuration for the FunASR client.
    */
-  config?: Partial<FunASRInitConfig>;
+  config?: Partial<FunASRClientInitConfig>;
 };
