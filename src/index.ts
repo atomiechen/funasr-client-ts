@@ -5,7 +5,7 @@ import type { FunASRClientOptions, FunASRInitMessage, FunASRMessage, FunASRMessa
 export * from "./types";
 
 
-export class FunASRClient<TDecode extends boolean> {
+export class FunASRClient<TDecode extends boolean = true> {
   private socket?: WebSocket;
   private finalPromise?: Promise<void>;
 

@@ -138,23 +138,13 @@ export type FunASRClientInitConfig = Omit<FunASRInitMessage, 'hotwords' | 'is_sp
 };
 
 /**
- * Options for the FunASR client.
+ * Shared options for the FunASR client.
  */
-export type FunASRClientOptions<TDecode extends boolean> = {
+type FunASRClientBaseOptions = {
   /**
    * The WebSocket URL to connect to the FunASR server.
    */
   url: string | URL;
-  /**
-   * Whether to decode the message before passing it to the `onMessage` callback.
-   */
-  decode?: TDecode;
-  /**
-   * Callback function to handle incoming messages from the server.
-   */
-  onMessage?: TDecode extends true
-    ? (msg: FunASRMessageDecoded) => void
-    : (msg: FunASRMessage) => void;
   /**
    * Callback function to handle state changes of the client.
    */
@@ -168,3 +158,29 @@ export type FunASRClientOptions<TDecode extends boolean> = {
    */
   config?: Partial<FunASRClientInitConfig>;
 };
+
+/**
+ * Options for the FunASR client.
+ */
+export type FunASRClientOptions<TDecode extends boolean = true> = 
+  TDecode extends true
+    ? FunASRClientBaseOptions & {
+        /**
+         * Whether to decode the message before passing it to the `onMessage` callback.
+         */
+        decode?: true;
+        /**
+         * Callback function to handle incoming messages from the server.
+         */
+        onMessage?: (msg: FunASRMessageDecoded) => void;
+      }
+    : FunASRClientBaseOptions & {
+        /**
+         * Whether to decode the message before passing it to the `onMessage` callback.
+         */
+        decode: false;
+        /**
+         * Callback function to handle incoming messages from the server.
+         */
+        onMessage?: (msg: FunASRMessage) => void;
+      };
