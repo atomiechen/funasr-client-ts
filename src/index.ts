@@ -13,10 +13,11 @@ export class FunASRClient<TDecode extends boolean = true> {
 
   /**
    * Connects to the FunASR server and sends the initial configuration message.
+   * @param setStartTimeOnConn Whether to set the start time to the current time upon connection. Default is true.
    * @returns A promise that resolves when the connection is established and the initial message is sent
    * or rejects if the connection fails.
    */
-  async connect() {
+  async connect(setStartTimeOnConn: boolean = true) {
     return new Promise((resolve, reject) => {
       let resolveFinal!: () => void;
       this.finalPromise = new Promise<void>((resolve) => {
@@ -35,6 +36,9 @@ export class FunASRClient<TDecode extends boolean = true> {
         this.socket?.send(JSON.stringify(payload));
         this.opts.onStateChange?.("connected", ev);
         resolve(null);
+        if (setStartTimeOnConn) {
+          this.setStartTime(Date.now());
+        }
       };
 
       this.socket.onmessage = (event) => {

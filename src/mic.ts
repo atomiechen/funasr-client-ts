@@ -52,7 +52,7 @@ export class MicASR {
    * Start the real-time ASR process by connecting to the FunASR server and starting the audio recorder.
    */
   async start() {
-    await this.client.connect();
+    await this.client.connect(false);
     await this.recorder.start();
     // set the start time for timestamp conversion
     this.client.setStartTime(Date.now());
