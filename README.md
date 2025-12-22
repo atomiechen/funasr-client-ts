@@ -2,6 +2,7 @@
 
 [![NPM](https://img.shields.io/npm/v/funasr-client?logo=npm&label=funasr-client)](https://www.npmjs.com/package/funasr-client)
 [![GitHub](https://img.shields.io/badge/github-gray?logo=github)](https://github.com/atomiechen/funasr-client-ts)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/atomiechen/funasr-client-ts)
 
 
 Really easy-to-use Typescript/JavaScript client for [FunASR][1] runtime service.
